@@ -1,0 +1,449 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Full App - HTML Mode</title>
+  <!-- 引入 Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- 引入 Lucide 图标库 -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    /* 页面切换动画 */
+    .page-enter { animation: slideUpFade 0.3s ease-out forwards; }
+    @keyframes slideUpFade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    /* 隐藏滚动条 */
+    ::-webkit-scrollbar { width: 0px; }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex justify-center font-sans selection:bg-pink-200">
+  
+  <!-- 手机外壳容器 -->
+  <div class="relative w-full max-w-md h-[100dvh] bg-pink-50 overflow-hidden shadow-2xl sm:border-x sm:border-gray-300">
+    
+    <!-- ================= 1. 主屏幕 (HOME) ================= -->
+    <div id="page-home" class="absolute inset-0 z-10 flex flex-col pt-12 pb-6 px-5 bg-pink-50 page-enter">
+      <div class="grid grid-cols-4 grid-rows-6 gap-x-4 gap-y-5 flex-1 content-start">
+        
+        <!-- AI 助手卡片 -->
+        <div class="col-span-4 row-span-2 bg-white/60 backdrop-blur-2xl border border-white/80 rounded-[2rem] p-5 flex flex-col justify-between shadow-xl shadow-pink-900/5 relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-pink-200/40 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
+          <div class="flex items-center gap-2 text-pink-600">
+            <i data-lucide="bot" class="w-5 h-5 text-pink-500"></i>
+            <span class="font-bold text-sm tracking-wide">AI Assistant</span>
+          </div>
+          <div class="text-slate-800 text-[22px] font-bold leading-tight mt-2">Good evening.<br/>How can I help you?</div>
+          <div class="mt-4 bg-white/80 rounded-full p-1.5 pl-5 pr-1.5 flex items-center justify-between backdrop-blur-md border border-pink-100 shadow-sm">
+            <span class="text-slate-400 text-sm font-medium">Ask me anything...</span>
+            <div class="w-8 h-8 bg-pink-100 rounded-full flex items-center justify-center text-pink-600">
+              <i data-lucide="mic" class="w-4 h-4"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- 身份卡片 -->
+        <div class="col-span-2 row-span-2 bg-gradient-to-br from-white/80 to-pink-50/60 backdrop-blur-2xl border border-white/80 rounded-[2rem] p-4 flex flex-col shadow-xl shadow-pink-900/5">
+          <div class="flex justify-between items-start">
+            <div class="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center border border-pink-200 shadow-inner">
+              <i data-lucide="cat" class="w-8 h-8 text-pink-500"></i>
+            </div>
+            <i data-lucide="qr-code" class="w-6 h-6 text-slate-400"></i>
+          </div>
+          <div class="mt-auto">
+            <div class="text-pink-400 text-[10px] uppercase tracking-widest font-bold mb-0.5">ID Card</div>
+            <div class="text-slate-800 font-bold text-lg">Alex Chen</div>
+            <div class="text-slate-500 text-[11px] font-mono mt-0.5 font-medium">NO. 8923 4412</div>
+          </div>
+        </div>
+
+        <!-- 右侧 4 个应用图标 -->
+        <div class="col-span-2 row-span-2 grid grid-cols-2 grid-rows-2 gap-4 place-items-center">
+          <div onclick="nav('contacts')" class="flex flex-col items-center gap-1.5 cursor-pointer hover:scale-105 transition-transform"><div class="w-14 h-14 rounded-[1.25rem] bg-teal-300 flex items-center justify-center text-white shadow-lg shadow-teal-300/40"><i data-lucide="heart-handshake" class="w-7 h-7"></i></div><span class="text-[11px] font-bold text-slate-600">SafeW</span></div>
+          <div onclick="nav('world')" class="flex flex-col items-center gap-1.5 cursor-pointer hover:scale-105 transition-transform"><div class="w-14 h-14 rounded-[1.25rem] bg-sky-300 flex items-center justify-center text-white shadow-lg shadow-sky-300/40"><i data-lucide="flower-2" class="w-7 h-7"></i></div><span class="text-[11px] font-bold text-slate-600">world</span></div>
+          <div onclick="nav('api')" class="flex flex-col items-center gap-1.5 cursor-pointer hover:scale-105 transition-transform"><div class="w-14 h-14 rounded-[1.25rem] bg-indigo-300 flex items-center justify-center text-white shadow-lg shadow-indigo-300/40"><i data-lucide="ghost" class="w-7 h-7"></i></div><span class="text-[11px] font-bold text-slate-600">api</span></div>
+          <div onclick="nav('characters')" class="flex flex-col items-center gap-1.5 cursor-pointer hover:scale-105 transition-transform"><div class="w-14 h-14 rounded-[1.25rem] bg-fuchsia-300 flex items-center justify-center text-white shadow-lg shadow-fuchsia-300/40"><i data-lucide="smile" class="w-7 h-7"></i></div><span class="text-[11px] font-bold text-slate-600">char</span></div>
+        </div>
+
+        <!-- 左下 4 个应用图标 -->
+        <div class="col-span-2 row-span-2 grid grid-cols-2 grid-rows-2 gap-4 place-items-center">
+          <div class="flex flex-col items-center gap-1.5"><div class="w-14 h-14 rounded-[1.25rem] bg-gradient-to-tr from-pink-300 via-rose-300 to-orange-300 flex items-center justify-center text-white shadow-lg shadow-rose-300/40"><i data-lucide="camera" class="w-7 h-7"></i></div><span class="text-[11px] font-bold text-slate-600">instagram</span></div>
+          <div class="flex flex-col items-center gap-1.5"><div class="w-14 h-14 rounded-[1.25rem] bg-rose-300 flex items-center justify-center text-white shadow-lg shadow-rose-300/40"><i data-lucide="headphones" class="w-7 h-7"></i></div><span class="text-[11px] font-bold text-slate-600">music</span></div>
+          <div class="flex flex-col items-center gap-1.5"><div class="w-14 h-14 rounded-[1.25rem] bg-amber-300 flex items-center justify-center text-white shadow-lg shadow-amber-300/40"><i data-lucide="book-heart" class="w-7 h-7"></i></div><span class="text-[11px] font-bold text-slate-600">study</span></div>
+          <div class="flex flex-col items-center gap-1.5"><div class="w-14 h-14 rounded-[1.25rem] bg-blue-300 flex items-center justify-center text-white shadow-lg shadow-blue-300/40"><i data-lucide="piggy-bank" class="w-7 h-7"></i></div><span class="text-[11px] font-bold text-slate-600">Alipay</span></div>
+        </div>
+
+        <!-- 音乐播放器卡片 -->
+        <div class="col-span-2 row-span-2 bg-white/60 backdrop-blur-2xl border border-white/80 rounded-[2rem] p-4 flex flex-col justify-between shadow-xl shadow-pink-900/5 relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-br from-pink-100/50 to-rose-100/50 pointer-events-none"></div>
+          <div class="relative flex items-center gap-3">
+            <div class="w-16 h-16 bg-white/80 rounded-2xl shadow-sm flex items-center justify-center backdrop-blur-md border border-white shrink-0">
+              <i data-lucide="headphones" class="w-8 h-8 text-pink-500"></i>
+            </div>
+            <div class="flex-1 overflow-hidden">
+              <div class="text-slate-800 font-bold text-[14px] leading-tight truncate">Midnight City</div>
+              <div class="text-slate-500 text-[11px] mt-1 truncate font-medium">M83</div>
+            </div>
+          </div>
+          <div class="relative flex items-center justify-center gap-5 mt-2">
+            <i data-lucide="skip-back" class="w-4 h-4 text-slate-400 fill-slate-400"></i>
+            <div class="w-10 h-10 bg-pink-400 text-white rounded-full flex items-center justify-center shadow-md shadow-pink-400/30">
+              <i data-lucide="play" class="w-4 h-4 fill-white ml-0.5"></i>
+            </div>
+            <i data-lucide="skip-forward" class="w-4 h-4 text-slate-400 fill-slate-400"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= 2. 聊天列表 (CONTACTS) ================= -->
+    <div id="page-contacts" class="absolute inset-0 z-20 flex flex-col bg-pink-50 hidden">
+      <div class="pt-12 pb-4 px-4 bg-white/80 backdrop-blur-xl border-b border-pink-100 flex items-center justify-between shadow-sm z-10">
+        <div class="flex items-center">
+          <button onclick="nav('home')" class="p-2 -ml-2 rounded-full hover:bg-pink-100 text-pink-500"><i data-lucide="chevron-left" class="w-7 h-7"></i></button>
+          <h1 class="text-lg font-bold text-slate-800 ml-2">Messages</h1>
+        </div>
+      </div>
+      <div class="flex-1 overflow-y-auto p-4 pb-24" id="contacts-list"></div>
+      
+      <!-- 底部导航栏 -->
+      <div class="absolute bottom-0 left-0 right-0 bg-white/80 backdrop-blur-xl border-t border-pink-100 pb-6 pt-3 px-6 flex justify-around shadow-[0_-10px_40px_-15px_rgba(236,72,153,0.2)] z-20">
+        <div class="flex flex-col items-center gap-1 text-pink-500"><i data-lucide="message-circle" class="w-6 h-6"></i><span class="text-[10px] font-bold">Chats</span></div>
+        <div onclick="nav('moments')" class="flex flex-col items-center gap-1 text-slate-400 hover:text-pink-400 cursor-pointer"><i data-lucide="compass" class="w-6 h-6"></i><span class="text-[10px] font-bold">Moments</span></div>
+        <div onclick="nav('user')" class="flex flex-col items-center gap-1 text-slate-400 hover:text-pink-400 cursor-pointer"><i data-lucide="user" class="w-6 h-6"></i><span class="text-[10px] font-bold">Me</span></div>
+      </div>
+    </div>
+
+    <!-- ================= 3. 聊天界面 (CHAT) ================= -->
+    <div id="page-chat" class="absolute inset-0 z-30 flex flex-col bg-pink-50 hidden">
+      <div class="pt-12 pb-4 px-4 bg-white/80 backdrop-blur-xl border-b border-pink-100 flex items-center shadow-sm z-10">
+        <button onclick="nav('contacts')" class="p-2 -ml-2 rounded-full hover:bg-pink-100 text-pink-500"><i data-lucide="chevron-left" class="w-7 h-7"></i></button>
+        <div class="flex items-center gap-3 ml-2">
+          <div id="chat-avatar" class="w-10 h-10 rounded-full flex items-center justify-center"><i data-lucide="smile" class="w-6 h-6"></i></div>
+          <div>
+            <h1 id="chat-name" class="text-base font-bold text-slate-800 leading-tight">Name</h1>
+            <div class="text-[11px] text-emerald-500 font-medium flex items-center gap-1"><div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>Online</div>
+          </div>
+        </div>
+      </div>
+      <div class="flex-1 overflow-y-auto p-4 space-y-4">
+        <div class="flex justify-start"><div class="bg-white border border-pink-100 text-slate-700 px-4 py-2.5 rounded-2xl rounded-tl-sm shadow-sm max-w-[80%] text-[15px]">Hello! How are you?</div></div>
+        <div class="flex justify-end"><div class="bg-pink-500 text-white px-4 py-2.5 rounded-2xl rounded-tr-sm shadow-sm shadow-pink-500/20 max-w-[80%] text-[15px]">I'm doing great, thanks!</div></div>
+      </div>
+      <div class="p-4 bg-white/80 backdrop-blur-xl border-t border-pink-100 pb-8 z-10">
+        <div class="flex items-center gap-2 bg-pink-50 border border-pink-100 rounded-full p-1.5 pl-4 shadow-inner">
+          <input type="text" placeholder="Type a message..." class="flex-1 bg-transparent outline-none text-[13px] text-slate-700 placeholder:text-slate-400 font-medium" />
+          <button class="w-9 h-9 bg-pink-400 rounded-full flex items-center justify-center text-white shadow-md shadow-pink-400/30"><i data-lucide="send" class="w-4 h-4 ml-0.5"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= 4. 朋友圈 (MOMENTS) ================= -->
+    <div id="page-moments" class="absolute inset-0 z-20 flex flex-col bg-pink-50 hidden">
+      <div class="pt-12 pb-4 px-4 bg-white/80 backdrop-blur-xl border-b border-pink-100 flex items-center justify-between shadow-sm z-10">
+        <div class="flex items-center">
+          <button onclick="nav('home')" class="p-2 -ml-2 rounded-full hover:bg-pink-100 text-pink-500"><i data-lucide="chevron-left" class="w-7 h-7"></i></button>
+          <h1 class="text-lg font-bold text-slate-800 ml-2">Moments</h1>
+        </div>
+      </div>
+      <div class="flex-1 overflow-y-auto p-4 pb-24 space-y-4" id="moments-list"></div>
+      
+      <!-- 底部导航栏 -->
+      <div class="absolute bottom-0 left-0 right-0 bg-white/80 backdrop-blur-xl border-t border-pink-100 pb-6 pt-3 px-6 flex justify-around shadow-[0_-10px_40px_-15px_rgba(236,72,153,0.2)] z-20">
+        <div onclick="nav('contacts')" class="flex flex-col items-center gap-1 text-slate-400 hover:text-pink-400 cursor-pointer"><i data-lucide="message-circle" class="w-6 h-6"></i><span class="text-[10px] font-bold">Chats</span></div>
+        <div class="flex flex-col items-center gap-1 text-pink-500"><i data-lucide="compass" class="w-6 h-6"></i><span class="text-[10px] font-bold">Moments</span></div>
+        <div onclick="nav('user')" class="flex flex-col items-center gap-1 text-slate-400 hover:text-pink-400 cursor-pointer"><i data-lucide="user" class="w-6 h-6"></i><span class="text-[10px] font-bold">Me</span></div>
+      </div>
+    </div>
+
+    <!-- ================= 5. 个人中心 (USER) ================= -->
+    <div id="page-user" class="absolute inset-0 z-20 flex flex-col bg-pink-50 hidden">
+      <div class="pt-12 pb-4 px-4 bg-white/80 backdrop-blur-xl border-b border-pink-100 flex items-center justify-between shadow-sm z-10">
+        <div class="flex items-center">
+          <button onclick="nav('home')" class="p-2 -ml-2 rounded-full hover:bg-pink-100 text-pink-500"><i data-lucide="chevron-left" class="w-7 h-7"></i></button>
+          <h1 class="text-lg font-bold text-slate-800 ml-2">Profile</h1>
+        </div>
+      </div>
+      <div class="flex-1 overflow-y-auto p-4 pb-24 flex flex-col items-center pt-10">
+        <div class="w-24 h-24 bg-pink-200 rounded-full flex items-center justify-center border-4 border-white shadow-lg mb-4 text-pink-500"><i data-lucide="user" class="w-12 h-12"></i></div>
+        <h2 class="text-2xl font-bold text-slate-800">Alex Chen</h2>
+        <p class="text-slate-500 text-sm mt-1">ID: 8923 4412</p>
+      </div>
+      
+      <!-- 底部导航栏 -->
+      <div class="absolute bottom-0 left-0 right-0 bg-white/80 backdrop-blur-xl border-t border-pink-100 pb-6 pt-3 px-6 flex justify-around shadow-[0_-10px_40px_-15px_rgba(236,72,153,0.2)] z-20">
+        <div onclick="nav('contacts')" class="flex flex-col items-center gap-1 text-slate-400 hover:text-pink-400 cursor-pointer"><i data-lucide="message-circle" class="w-6 h-6"></i><span class="text-[10px] font-bold">Chats</span></div>
+        <div onclick="nav('moments')" class="flex flex-col items-center gap-1 text-slate-400 hover:text-pink-400 cursor-pointer"><i data-lucide="compass" class="w-6 h-6"></i><span class="text-[10px] font-bold">Moments</span></div>
+        <div class="flex flex-col items-center gap-1 text-pink-500"><i data-lucide="user" class="w-6 h-6"></i><span class="text-[10px] font-bold">Me</span></div>
+      </div>
+    </div>
+
+    <!-- ================= 6. 角色列表 (CHARACTERS) ================= -->
+    <div id="page-characters" class="absolute inset-0 z-30 flex flex-col bg-pink-50 hidden">
+      <div class="pt-12 pb-4 px-4 bg-white/80 backdrop-blur-xl border-b border-pink-100 flex items-center justify-between shadow-sm z-10">
+        <div class="flex items-center">
+          <button onclick="nav('home')" class="p-2 -ml-2 rounded-full hover:bg-pink-100 text-pink-500"><i data-lucide="chevron-left" class="w-7 h-7"></i></button>
+          <h1 class="text-lg font-bold text-slate-800 ml-2">Characters</h1>
+        </div>
+        <button onclick="openCharEditor()" class="w-9 h-9 bg-fuchsia-100 text-fuchsia-500 rounded-full flex items-center justify-center hover:bg-fuchsia-200 shadow-sm"><i data-lucide="plus" class="w-5 h-5"></i></button>
+      </div>
+      <div class="flex-1 overflow-y-auto p-4 pb-12">
+        <div class="flex flex-col gap-3" id="characters-list"></div>
+      </div>
+    </div>
+
+    <!-- ================= 7. 编辑角色 (EDIT CHARACTER) ================= -->
+    <div id="page-create-char" class="absolute inset-0 z-40 flex flex-col bg-pink-50 hidden">
+      <div class="pt-12 pb-4 px-4 bg-white/80 backdrop-blur-xl border-b border-pink-100 flex items-center shadow-sm z-10">
+        <button onclick="nav('characters')" class="p-2 -ml-2 rounded-full hover:bg-pink-100 text-pink-500"><i data-lucide="chevron-left" class="w-7 h-7"></i></button>
+        <div class="flex items-center gap-2 ml-2">
+          <div class="w-8 h-8 rounded-full bg-fuchsia-100 flex items-center justify-center text-fuchsia-500"><i data-lucide="smile" class="w-4 h-4"></i></div>
+          <h1 id="char-page-title" class="text-lg font-bold text-slate-800">Create Character</h1>
+        </div>
+      </div>
+      <div class="flex-1 overflow-y-auto p-5 pb-12">
+        <div class="bg-white/60 backdrop-blur-xl rounded-2xl p-5 shadow-sm shadow-pink-900/5 border border-white/80 flex flex-col gap-6">
+          <div class="flex flex-col items-center gap-3">
+            <div id="char-avatar-preview" class="w-24 h-24 rounded-full bg-pink-100 border-2 border-dashed border-pink-300 flex items-center justify-center text-pink-400"><i data-lucide="camera" class="w-8 h-8"></i></div>
+            <span class="text-[12px] font-bold text-slate-400">Upload Avatar</span>
+          </div>
+          <div>
+            <label class="text-[13px] font-bold text-slate-500 mb-2 block">Character Name</label>
+            <input id="char-input-name" type="text" placeholder="e.g. Alice" class="w-full bg-transparent border-b border-slate-200 pb-2 outline-none text-[16px] text-slate-800 font-medium focus:border-fuchsia-400" />
+          </div>
+          <div>
+            <label class="text-[13px] font-bold text-slate-500 mb-2 block">Personality & Background</label>
+            <textarea id="char-input-desc" placeholder="Describe who they are..." class="w-full h-24 bg-transparent border-b border-slate-200 pb-2 outline-none resize-none text-[15px] text-slate-800 focus:border-fuchsia-400 leading-relaxed"></textarea>
+          </div>
+          <button onclick="saveCharacter()" id="char-save-btn" class="mt-4 bg-fuchsia-500 text-white rounded-xl py-3.5 font-bold text-[15px] shadow-sm shadow-fuchsia-500/30 hover:bg-fuchsia-600">Create Character</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= 8. 世界设定 (WORLD) ================= -->
+    <div id="page-world" class="absolute inset-0 z-30 flex flex-col bg-pink-50 hidden">
+      <div class="pt-12 pb-4 px-4 bg-white/80 backdrop-blur-xl border-b border-pink-100 flex items-center justify-between shadow-sm z-10">
+        <div class="flex items-center">
+          <button onclick="nav('home')" class="p-2 -ml-2 rounded-full hover:bg-pink-100 text-pink-500"><i data-lucide="chevron-left" class="w-7 h-7"></i></button>
+          <h1 class="text-lg font-bold text-slate-800 ml-2">World Books</h1>
+        </div>
+      </div>
+      <div class="flex-1 overflow-y-auto p-4 pb-12">
+        <div class="flex flex-col gap-3" id="world-list"></div>
+      </div>
+    </div>
+
+    <!-- ================= 9. API 设置 (API) ================= -->
+    <div id="page-api" class="absolute inset-0 z-30 flex flex-col bg-pink-50 hidden">
+      <div class="pt-12 pb-4 px-4 bg-white/80 backdrop-blur-xl border-b border-pink-100 flex items-center shadow-sm z-10">
+        <button onclick="nav('home')" class="p-2 -ml-2 rounded-full hover:bg-pink-100 text-pink-500"><i data-lucide="chevron-left" class="w-7 h-7"></i></button>
+        <h1 class="text-lg font-bold text-slate-800 ml-2">API Settings</h1>
+      </div>
+      <div class="flex-1 overflow-y-auto p-5 pb-12">
+        <div class="bg-white/60 backdrop-blur-xl rounded-2xl p-5 shadow-sm shadow-pink-900/5 border border-white/80 flex flex-col gap-6">
+          <div>
+            <label class="text-[13px] font-bold text-slate-500 mb-2 block">API URL</label>
+            <input type="text" value="https://api.example.com/v1" class="w-full bg-transparent border-b border-slate-200 pb-2 outline-none text-[16px] text-slate-800 font-medium focus:border-indigo-400" />
+          </div>
+          <div>
+            <label class="text-[13px] font-bold text-slate-500 mb-2 block">API Key</label>
+            <input type="password" placeholder="sk-..." class="w-full bg-transparent border-b border-slate-200 pb-2 outline-none text-[16px] text-slate-800 font-medium focus:border-indigo-400" />
+          </div>
+          <button onclick="nav('home')" class="mt-4 bg-indigo-500 text-white rounded-xl py-3.5 font-bold text-[15px] shadow-sm shadow-indigo-500/30 hover:bg-indigo-600">Save Settings</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ================= JAVASCRIPT 交互逻辑 ================= -->
+  <script>
+    // --- 模拟数据 ---
+    const CONTACTS = [
+      { id: '1', name: 'Alice', lastMessage: 'See you tomorrow!', time: '10:30 AM', unread: 2, color: 'bg-rose-100', iconColor: 'text-rose-500' },
+      { id: '2', name: 'Bob', lastMessage: 'Thanks for the help', time: 'Yesterday', unread: 0, color: 'bg-blue-100', iconColor: 'text-blue-500' },
+      { id: '3', name: 'Charlie', lastMessage: 'Are we still on for lunch?', time: 'Tuesday', unread: 0, color: 'bg-emerald-100', iconColor: 'text-emerald-500' },
+    ];
+
+    const MOMENTS = [
+      { id: '1', author: 'Alice', content: 'Just had the best coffee ever! ☕️', time: '2 hours ago', likes: 12, comments: 3, color: 'bg-rose-100', iconColor: 'text-rose-500' },
+      { id: '2', author: 'Bob', content: 'Working on a new project. Exciting times ahead! 🚀', time: '5 hours ago', likes: 24, comments: 5, color: 'bg-blue-100', iconColor: 'text-blue-500' },
+    ];
+
+    const WORLDS = [
+      { id: '1', title: 'Cyberpunk City', desc: 'A neon-lit metropolis in 2077.', color: 'bg-cyan-100', iconColor: 'text-cyan-500' },
+      { id: '2', title: 'Fantasy Realm', desc: 'Dragons, magic, and epic quests.', color: 'bg-amber-100', iconColor: 'text-amber-500' },
+    ];
+
+    let CHARACTERS = [
+      { id: '1', name: 'Alice', desc: 'A helpful and friendly AI assistant.', color: 'bg-rose-100', iconColor: 'text-rose-500' },
+      { id: '2', name: 'Grumpy Cat', desc: 'Sarcastic feline who hates Mondays.', color: 'bg-amber-100', iconColor: 'text-amber-500' },
+      { id: '3', name: 'Cyber Ninja', desc: 'A stealthy operative from 2077.', color: 'bg-cyan-100', iconColor: 'text-cyan-500' },
+    ];
+
+    let editingCharId = null;
+
+    // --- 页面导航逻辑 ---
+    function nav(pageId) {
+      // 隐藏所有页面
+      document.querySelectorAll('[id^="page-"]').forEach(el => {
+        el.classList.add('hidden');
+        el.classList.remove('page-enter');
+      });
+      // 显示目标页面并添加动画
+      const target = document.getElementById('page-' + pageId);
+      if (target) {
+        target.classList.remove('hidden');
+        target.classList.add('page-enter');
+      }
+    }
+
+    // --- 聊天页面逻辑 ---
+    function openChat(id) {
+      const contact = CONTACTS.find(c => c.id === id);
+      document.getElementById('chat-name').innerText = contact.name;
+      const avatar = document.getElementById('chat-avatar');
+      avatar.className = `w-10 h-10 rounded-full flex items-center justify-center ${contact.color}`;
+      avatar.innerHTML = `<i data-lucide="smile" class="w-6 h-6 ${contact.iconColor}"></i>`;
+      lucide.createIcons();
+      nav('chat');
+    }
+
+    // --- 渲染列表 ---
+    function renderContacts() {
+      const html = CONTACTS.map(c => `
+        <div onclick="openChat('${c.id}')" class="flex items-center gap-4 p-3 bg-white/60 backdrop-blur-xl border border-white/80 rounded-2xl shadow-sm shadow-pink-900/5 cursor-pointer hover:bg-white/90 mb-3">
+          <div class="w-12 h-12 rounded-full flex items-center justify-center shadow-inner shrink-0 ${c.color}">
+            <i data-lucide="smile" class="w-6 h-6 ${c.iconColor}"></i>
+          </div>
+          <div class="flex-1 overflow-hidden">
+            <div class="flex justify-between items-center mb-0.5">
+              <span class="font-bold text-slate-800 text-[15px] truncate">${c.name}</span>
+              <span class="text-[11px] text-slate-400 font-medium shrink-0">${c.time}</span>
+            </div>
+            <div class="text-[13px] text-slate-500 truncate">${c.lastMessage}</div>
+          </div>
+          ${c.unread ? `<div class="w-5 h-5 bg-pink-500 rounded-full flex items-center justify-center text-white text-[10px] font-bold shrink-0 shadow-sm">${c.unread}</div>` : ''}
+        </div>
+      `).join('');
+      document.getElementById('contacts-list').innerHTML = html;
+    }
+
+    function renderMoments() {
+      const html = MOMENTS.map(m => `
+        <div class="bg-white/60 backdrop-blur-xl border border-white/80 rounded-2xl p-4 shadow-sm shadow-pink-900/5">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-10 h-10 rounded-full flex items-center justify-center shadow-inner ${m.color}">
+              <i data-lucide="smile" class="w-5 h-5 ${m.iconColor}"></i>
+            </div>
+            <div>
+              <div class="font-bold text-slate-800 text-[14px]">${m.author}</div>
+              <div class="text-[11px] text-slate-400">${m.time}</div>
+            </div>
+          </div>
+          <p class="text-slate-700 text-[14px] leading-relaxed mb-4">${m.content}</p>
+          <div class="flex items-center gap-6 pt-3 border-t border-pink-100/50">
+            <div class="flex items-center gap-1.5 text-slate-400 hover:text-pink-500 cursor-pointer"><i data-lucide="heart" class="w-4 h-4"></i><span class="text-[12px] font-bold">${m.likes}</span></div>
+            <div class="flex items-center gap-1.5 text-slate-400 hover:text-pink-500 cursor-pointer"><i data-lucide="message-circle" class="w-4 h-4"></i><span class="text-[12px] font-bold">${m.comments}</span></div>
+          </div>
+        </div>
+      `).join('');
+      document.getElementById('moments-list').innerHTML = html;
+    }
+
+    function renderWorlds() {
+      const html = WORLDS.map(w => `
+        <div class="bg-white/60 backdrop-blur-xl border border-white/80 rounded-2xl p-4 flex items-center gap-4 shadow-sm shadow-pink-900/5 cursor-pointer hover:bg-white/90">
+          <div class="w-12 h-12 rounded-xl flex items-center justify-center shadow-inner shrink-0 ${w.color}">
+            <i data-lucide="book" class="w-6 h-6 ${w.iconColor}"></i>
+          </div>
+          <div class="flex-1 overflow-hidden">
+            <div class="font-bold text-slate-800 text-[15px] truncate">${w.title}</div>
+            <div class="text-[12px] text-slate-500 mt-0.5 truncate">${w.desc}</div>
+          </div>
+          <i data-lucide="chevron-right" class="w-5 h-5 text-slate-300 shrink-0"></i>
+        </div>
+      `).join('');
+      document.getElementById('world-list').innerHTML = html;
+    }
+
+    function renderCharacters() {
+      let html = `
+        <div onclick="openCharEditor()" class="bg-white/40 backdrop-blur-xl border-2 border-dashed border-fuchsia-200 rounded-2xl p-3 flex items-center gap-4 shadow-sm cursor-pointer hover:bg-fuchsia-50/50">
+          <div class="w-12 h-12 rounded-full bg-fuchsia-100 flex items-center justify-center text-fuchsia-400 shrink-0"><i data-lucide="plus" class="w-6 h-6"></i></div>
+          <div class="font-bold text-fuchsia-500 text-[15px]">Create New Character</div>
+        </div>
+      `;
+      html += CHARACTERS.map(c => `
+        <div onclick="openCharEditor('${c.id}')" class="bg-white/60 backdrop-blur-xl border border-white/80 rounded-2xl p-3 flex items-center gap-4 shadow-sm shadow-pink-900/5 cursor-pointer hover:bg-white/90">
+          <div class="w-12 h-12 rounded-full flex items-center justify-center shadow-inner shrink-0 ${c.color}">
+            <i data-lucide="smile" class="w-6 h-6 ${c.iconColor}"></i>
+          </div>
+          <div class="flex-1 overflow-hidden">
+            <div class="font-bold text-slate-800 text-[15px] truncate">${c.name}</div>
+            <div class="text-[12px] text-slate-500 mt-0.5 truncate">${c.desc}</div>
+          </div>
+          <i data-lucide="chevron-right" class="w-5 h-5 text-slate-300 shrink-0"></i>
+        </div>
+      `).join('');
+      document.getElementById('characters-list').innerHTML = html;
+    }
+
+    // --- 角色编辑逻辑 ---
+    function openCharEditor(id = null) {
+      editingCharId = id;
+      const title = document.getElementById('char-page-title');
+      const btn = document.getElementById('char-save-btn');
+      const nameInput = document.getElementById('char-input-name');
+      const descInput = document.getElementById('char-input-desc');
+      const avatar = document.getElementById('char-avatar-preview');
+
+      if (id) {
+        const char = CHARACTERS.find(c => c.id === id);
+        title.innerText = 'Edit Character';
+        btn.innerText = 'Save Changes';
+        nameInput.value = char.name;
+        descInput.value = char.desc;
+        avatar.className = `w-24 h-24 rounded-full border-2 border-dashed border-pink-300 flex items-center justify-center shadow-inner ${char.color} ${char.iconColor}`;
+        avatar.innerHTML = `<i data-lucide="smile" class="w-12 h-12"></i>`;
+      } else {
+        title.innerText = 'Create Character';
+        btn.innerText = 'Create Character';
+        nameInput.value = '';
+        descInput.value = '';
+        avatar.className = `w-24 h-24 rounded-full border-2 border-dashed border-pink-300 flex items-center justify-center shadow-inner bg-pink-100 text-pink-400`;
+        avatar.innerHTML = `<i data-lucide="camera" class="w-8 h-8"></i>`;
+      }
+      lucide.createIcons();
+      nav('create-char');
+    }
+
+    function saveCharacter() {
+      const name = document.getElementById('char-input-name').value || 'Unnamed';
+      const desc = document.getElementById('char-input-desc').value || 'No description';
+      
+      if (editingCharId) {
+        const idx = CHARACTERS.findIndex(c => c.id === editingCharId);
+        CHARACTERS[idx].name = name;
+        CHARACTERS[idx].desc = desc;
+      } else {
+        CHARACTERS.push({
+          id: Date.now().toString(),
+          name, desc,
+          color: 'bg-fuchsia-100', iconColor: 'text-fuchsia-500'
+        });
+      }
+      renderCharacters();
+      lucide.createIcons();
+      nav('characters');
+    }
+
+    // --- 初始化 ---
+    renderContacts();
+    renderMoments();
+    renderWorlds();
+    renderCharacters();
+    lucide.createIcons(); // 渲染所有图标
+  </script>
+</body>
+</html>
